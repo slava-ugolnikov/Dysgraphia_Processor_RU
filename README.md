@@ -74,19 +74,6 @@ poetry run ruff check . --fix
 ```bash
 poetry run ruff format .
 ```
-
-### Black:
-
-```bash
-poetry run black .
-```
-
-### Mypy:
-
-```bash
-poetry run mypy src
-```
-
 ---
 
 ## Pre-commit
