@@ -1,10 +1,16 @@
+# проверить версию поетри (если вторая версия, то обновить), какой модуль заворачивать в пакет (та папочка которая в срц), убрать лишние галочки и форматтеры, 
+
 [tool.poetry]
 name = "cv-dysgraphia"
-version = "0.1.0"
+version = "1.0.0"
 description = "Handwritten OCR and rule-based dysgraphia error detection"
 authors = ["Viacheslav Ugolnikov"]
 readme = "README.md"
-packages = [{ include = "src" }]
+packages = [{ include = "src" }] # back-end....
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -28,14 +34,11 @@ scipy = "^1.11.0"
 [tool.poetry.group.dev.dependencies]
 # Linters 
 ruff = "^0.7.0"
-mypy = "^1.10.0"
 types-requests = "*"
 types-Pillow = "*"
 
 # Formatters 
 black = "^24.0.0"
-
-
 
 [tool.ruff]
 select = ["E", "F", "W", "I", "N", "UP", "B", "A", "TID"]
@@ -47,8 +50,3 @@ fix = true
 
 # Изолированные директорий
 src = ["src"]
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
