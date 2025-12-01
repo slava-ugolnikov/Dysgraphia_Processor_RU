@@ -9,7 +9,7 @@ packages = [{ include = "src" }]
 [tool.poetry.dependencies]
 python = "^3.10"
 
-# --- Linguistics ---
+# Linguistics
 pymorphy2 = "^0.9.1"
 pymorphy2-dicts-ru-morphynt = "^2.4.417127.4579844"
 rurebus = "^1.0.1"
@@ -17,32 +17,29 @@ russtress = "^1.0.0"
 rusyphon = "^0.4.0"
 pyphen = "^0.14.0"
 
-# --- OCR / CV ---
+# OCR / CV
 opencv-python = "^4.10.0"=
 pytesseract = "^0.3.10"
 
-# --- Utilities ---
+# Utilities
 numpy = "^1.26.0"
 scipy = "^1.11.0"
 
 [tool.poetry.group.dev.dependencies]
-# --- Linters / Type checking ---
+# Linters 
 ruff = "^0.7.0"
 mypy = "^1.10.0"
-types-requests = "*"         # пример: типы для библиотек
+types-requests = "*"
 types-Pillow = "*"
 
-# --- Formatters ---
+# Formatters 
 black = "^24.0.0"
 
 
 
 [tool.ruff]
-# Включаем все правила, кроме слишком строгих
 select = ["E", "F", "W", "I", "N", "UP", "B", "A", "TID"]
-ignore = [
-    "E501",  # игнор длины строки — пусть black занимается
-]
+ignore = ["E501"]
 line-length = 88
 
 # Автоматические исправления
