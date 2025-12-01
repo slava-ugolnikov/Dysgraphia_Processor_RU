@@ -18,7 +18,7 @@ rusyphon = "^0.4.0"
 pyphen = "^0.14.0"
 
 # OCR / CV
-opencv-python = "^4.10.0"=
+opencv-python = "^4.10.0"
 pytesseract = "^0.3.10"
 
 # Utilities
