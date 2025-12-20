@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Poetry
+.venv/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Outputs
+*.xlsx

@@ -1,0 +1,4 @@
+python==3.10
+pymorphy2==0.9.1
+wordfreq==3.0.3
+pandas==2.2.0

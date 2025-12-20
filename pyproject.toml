@@ -3,7 +3,7 @@
 [tool.poetry]
 name = "cv-dysgraphia"
 version = "1.0.0"
-description = "Handwritten OCR and rule-based dysgraphia error detection"
+description = "Rule-based dysgraphia error detection"
 authors = ["Viacheslav Ugolnikov"]
 readme = "README.md"
 packages = [{ include = "src" }] # back-end....
@@ -13,27 +13,14 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-
-# Linguistics
-pymorphy2 = "^0.9.1"
-pymorphy2-dicts-ru-morphynt = "^2.4.417127.4579844"
-rurebus = "^1.0.1"
-russtress = "^1.0.0"
-rusyphon = "^0.4.0"
-pyphen = "^0.14.0"
-
-# OCR / CV
-opencv-python = "^4.10.0"
-pytesseract = "^0.3.10"
-
-# Utilities
-numpy = "^1.26.0"
-scipy = "^1.11.0"
+python = "3.10"
+pymorphy2 = "0.9.1"
+wordfreq = "3.0.3"
+pandas = "2.2.0"
 
 [tool.poetry.group.dev.dependencies]
 # Linters 
-ruff = "^0.7.0"
+ruff = "0.7.0"
 types-requests = "*"
 types-Pillow = "*"
 
@@ -44,9 +31,6 @@ black = "^24.0.0"
 select = ["E", "F", "W", "I", "N", "UP", "B", "A", "TID"]
 ignore = ["E501"]
 line-length = 88
-
-# Автоматические исправления
-fix = true
 
 # Изолированные директорий
 src = ["src"]
