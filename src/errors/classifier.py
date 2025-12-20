@@ -1,5 +1,5 @@
-from softness import SoftnessErrorAnalyzer
-from phonetic import PhoneticConfusionAnalyzer
+from src.errors.softness import SoftnessErrorAnalyzer
+from src.errors.phonetic import PhoneticConfusionAnalyzer
 
 
 class ErrorClassifier:

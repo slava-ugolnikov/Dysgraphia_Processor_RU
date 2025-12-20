@@ -1,4 +1,4 @@
-from vocabulary import Vocabulary
+from src.language.vocabulary import Vocabulary
 
 
 class WordReconstructor:

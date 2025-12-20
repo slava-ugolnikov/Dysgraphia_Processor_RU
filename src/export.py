@@ -1,5 +1,7 @@
 from typing import List, Tuple
 import pandas as pd
+import openpyxl
+
 
 class ExcelExporter:
     def export(self, data: List[Tuple[str, str, str]], filename: str):
