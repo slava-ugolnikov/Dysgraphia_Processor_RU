@@ -1,4 +1,5 @@
 from src.language.vocabulary import Vocabulary
+from src.errors.classifier import ErrorClassifier
 
 
 class WordReconstructor:
