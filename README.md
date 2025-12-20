@@ -48,6 +48,11 @@
 ```bash
 git clone https://github.com/slava-ugolnikov/Dysgraphia_Processor_RU.git
 cd Dysgraphia_Processor_RU
-poetry install
+pip install requirements.txt -r
 ```
 
+## Теоретическая база
+Категоризация ошибок основана на классификации, предложенной Р.И. Лалаевой (1989).
+
+## Note
+Обращаем внимание, что программа может допускать ошибки и нуждается в дальнейшем совершенствовании.
