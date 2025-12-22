@@ -1,8 +1,8 @@
-from typing import List, Tuple
+from typing import List, Tuple  # Это устаревшая типизация. Используйте `list[...]` / `tuple[...]`
 
 
 class MissingWordDetector:
-    def detect(self, lemmas: List[str]) -> List[Tuple[str, str, str]]:
+    def detect(self, lemmas: List[str]) -> List[Tuple[str, str, str]]:  # Method 'detect' may be 'static'
         results = []
 
         for i in range(len(lemmas) - 1):

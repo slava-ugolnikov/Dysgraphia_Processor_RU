@@ -1,4 +1,6 @@
 from src.config import HARD_CONSONANTS, VOWEL_PAIRS, SOFTENING_VOWELS, IOTATED
+# Если бы вы добавили в папку `__init__.py`, то правильный импорт был бы:
+# from config import HARD_CONSONANTS, ...
 
 
 class SoftnessErrorAnalyzer:
@@ -58,7 +60,7 @@ class SoftnessErrorAnalyzer:
             if correct[i] == "ь":
                 if (
                         i > 0 and
-                        i < len(correct) - 1 and
+                        i < len(correct) - 1 and  # 0 < i < len(correct) - 1 and
                         correct[i + 1] in IOTATED
                 ):
                     candidate = correct[:i] + correct[i + 1:]
