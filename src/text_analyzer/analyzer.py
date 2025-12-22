@@ -1,10 +1,10 @@
 from difflib import SequenceMatcher
 
-from src.language.vocabulary import Vocabulary
-from src.text_analyzer.tokenizer import Tokenizer
+from src.language.vocabulary import Vocabulary  # from language import Vocabulary, WordReconstructor
+from src.text_analyzer.tokenizer import Tokenizer  # from .tokenizer import Tokenizer
 from src.language.reconstructor import WordReconstructor
-from src.errors.missing_word import MissingWordDetector
-from src.export import ExcelExporter
+from src.errors.missing_word import MissingWordDetector  # from errors import MissingWordDetector, ErrorClassifier
+from src.export import ExcelExporter  # from export import ExcelExporter
 from src.errors.classifier import ErrorClassifier
 
 

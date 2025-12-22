@@ -1,5 +1,7 @@
 from src.config import (VOICED, VOICELESS, SIBILANTS, HUSHING, AFFRICATES,
                         AFFRICATE_COMPONENTS, LABIAL_VOWELS)
+# Если бы вы добавили в папку `__init__.py`, то правильный импорт был бы:
+# from config import VOICED, ...
 
 
 class PhoneticConfusionAnalyzer:

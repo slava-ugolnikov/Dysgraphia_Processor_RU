@@ -1,5 +1,5 @@
-from src.text_analyzer.analyzer import TextAnalyzer
-from src.language.vocabulary import Vocabulary
+from src.text_analyzer.analyzer import TextAnalyzer  # from text_analyzer import TextAnalyzer
+from src.language.vocabulary import Vocabulary  # from language import Vocabulary
 
 
 if __name__ == "__main__":

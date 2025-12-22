@@ -1,5 +1,5 @@
-from src.errors.softness import SoftnessErrorAnalyzer
-from src.errors.phonetic import PhoneticConfusionAnalyzer
+from src.errors.softness import SoftnessErrorAnalyzer  # from .softness import SoftnessErrorAnalyzer
+from src.errors.phonetic import PhoneticConfusionAnalyzer  # from .phonetic import PhoneticConfusionAnalyzer
 
 
 class ErrorClassifier:
@@ -30,7 +30,7 @@ class ErrorClassifier:
 
     @staticmethod
     def is_anticipation(correct: str, written: str) -> bool:
-        if len(correct) != len(written):
+        if len(correct) != len(written):  # Duplicated code fragment (8 lines long)
             return False
 
         diffs = [(i, c, w) for i, (c, w) in enumerate(zip(correct, written)) if c != w]
@@ -42,12 +42,12 @@ class ErrorClassifier:
         return (
                 w1 == c2 and
                 w2 == c2 and
-                i < j
+                i < j  # Expected type 'tuple[int, ...]' (matched generic type 'tuple[_T_co, ...]'), got 'tuple[int, str, str]' instead
         )
 
     @staticmethod
     def is_transposition(correct: str, written: str) -> bool:
-        if len(correct) != len(written):
+        if len(correct) != len(written):  # Duplicated code fragment (9 lines long)
             return False
 
         diffs = [(i, c, w) for i, (c, w) in enumerate(zip(correct, written)) if c != w]

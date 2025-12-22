@@ -4,7 +4,7 @@ import openpyxl
 
 
 class ExcelExporter:
-    def export(self, data: List[Tuple[str, str, str]], filename: str):
+    def export(self, data: List[Tuple[str, str, str]], filename: str):  # Method 'export' may be 'static'
         df = pd.DataFrame(
             data,
             columns=[

@@ -1,5 +1,7 @@
-from src.language.vocabulary import Vocabulary
+from src.language.vocabulary import Vocabulary  # from .vocabulary import Vocabulary
 from src.errors.classifier import ErrorClassifier
+# Если бы вы добавили в папки `__init__.py` (и настроили бы их), то правильный импорт был бы:
+# from errors import ErrorClassifier
 
 
 class WordReconstructor:
