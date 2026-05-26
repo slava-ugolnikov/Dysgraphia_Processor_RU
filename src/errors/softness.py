@@ -27,11 +27,30 @@ class SoftnessErrorAnalyzer:
 
     @staticmethod
     def _mixed_softness_methods(correct, written):
-        patterns = ["ьа", "ьу", "ьо", "ьэ", "ья", "ью", "ьё", "ье", "ь"]
+        """
+        Смешение способов обозначения мягкости.
+        Точный случай (структурная подмена):
+          задумано: [согл][я/ю/ё/е]          написано: [согл]ь[а/у/о/э]
+          задумано: [согл]ь[а/у/о/э]         написано: [согл][я/ю/ё/е]
+        """
+        PAIRS = {"я": "а", "ю": "у", "ё": "о", "е": "э"}
+        INV   = {v: k for k, v in PAIRS.items()}
 
-        for p in patterns:
-            if p in written and any(v in correct for v in SOFTENING_VOWELS):
-                return True
+        # iotated - ь + hard (длина +1)
+        if len(written) == len(correct) + 1:
+            for i in range(len(correct)):
+                if correct[i] not in PAIRS:
+                    continue
+                hard = PAIRS[correct[i]]
+                if correct[:i] + "ь" + hard + correct[i + 1:] == written:
+                    return True
+        # ь + hard - iotated (длина -1)
+        if len(correct) == len(written) + 1:
+            for j in range(len(correct) - 1):
+                if correct[j] == "ь" and correct[j + 1] in INV:
+                    iotated = INV[correct[j + 1]]
+                    if correct[:j] + iotated + correct[j + 2:] == written:
+                        return True
         return False
 
     @staticmethod
@@ -61,7 +80,7 @@ class SoftnessErrorAnalyzer:
                         i < len(correct) - 1 and
                         correct[i + 1] in IOTATED
                 ):
-                    candidate = correct[:i] + correct[i + 1:]
+                    candidate = correct[:i] + correct[i+1:]
                     if candidate == written:
                         return True
         return False
@@ -72,24 +91,24 @@ class SoftnessErrorAnalyzer:
         if abs(len(correct) - len(written)) > 2:
             return None
 
+        # Пропуск разделительного Ь (друзя -> друзья)
+        if SoftnessErrorAnalyzer._missing_separating_soft_sign(correct, written):
+            return "Трудности усвоения разделительных знаков"
+
         # Пропуск Ь после твёрдого согласного (дожд -> дождь)
         if SoftnessErrorAnalyzer._missed_soft_sign_after_consonant(correct, written):
-            return "нарушение обозначения мягкости (пропуск Ь)"
+            return "Нарушения обозначения мягкости согласных при помощи Ь"
 
         # Йотированная -> нейотированная (мягкий -> магкий)
         if SoftnessErrorAnalyzer._iotated_replaced(correct, written):
-            return "нарушение обозначения мягкости йотированной гласной"
+            return "Нарушения обозначения мягкости согласных йотированными гласными"
 
         # Смешение способов обозначения мягкости
         if SoftnessErrorAnalyzer._mixed_softness_methods(correct, written):
-            return "смешение способов обозначения мягкости"
+            return "Смешение способов обозначения мягкости"
 
         # Смешение Й и йотированных гласных
         if SoftnessErrorAnalyzer._confusion_j_and_iotated(correct, written):
-            return "смешение Й и йотированных гласных"
-
-        # Пропуск разделительного Ь (друзя -> друзья)
-        if SoftnessErrorAnalyzer._missing_separating_soft_sign(correct, written):
-            return "пропуск разделительного Ь"
+            return "Трудности усвоения Й, смешение Й и йотированных гласных"
 
         return None

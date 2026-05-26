@@ -1,3 +1,4 @@
+import pandas as pd
 from difflib import SequenceMatcher
 
 from src.language.vocabulary import Vocabulary
@@ -27,51 +28,68 @@ class TextAnalyzer:
         written_tokens = self.tokenizer.tokenize(written_text)
         rows = []
 
-
-        # РЕЖИМ С ЭТАЛОНОМ
         if reference_text:
             ref_tokens = self.tokenizer.tokenize(reference_text)
-
             matcher = SequenceMatcher(None, ref_tokens, written_tokens)
-
             for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-
-                # Совпадение
                 if tag == "equal":
                     for c, w in zip(ref_tokens[i1:i2], written_tokens[j1:j2]):
                         rows.append((c, w, "без ошибки"))
-
-                # Замена (ошибки в словах)
                 elif tag == "replace":
                     for c, w in zip(ref_tokens[i1:i2], written_tokens[j1:j2]):
                         error = ErrorClassifier.classify(c, w)
                         rows.append((c, w, error))
-
-                # Пропуск слова
                 elif tag == "delete":
                     for c in ref_tokens[i1:i2]:
                         rows.append((c, "", "пропуск слова"))
-
-                # Лишнее слово
                 elif tag == "insert":
                     for w in written_tokens[j1:j2]:
                         rows.append(("", w, "лишнее слово"))
-
-        # РЕЖИМ БЕЗ ЭТАЛОНА
         else:
-            # Ошибки внутри слов
             for w in written_tokens:
                 c, error = self.reconstructor.reconstruct(w)
                 rows.append((c, w, error))
 
-            # Пропуски слов (rule-based)
-            lemmas = [
-                self.vocab.morph.parse(w)[0].normal_form
-                for w in written_tokens
-            ]
-
+            lemmas = [self.vocab.morph.parse(w)[0].normal_form for w in written_tokens]
             missing_word_errors = self.missing_word_detector.detect(lemmas)
             rows.extend(missing_word_errors)
 
-        # ЭКСПОРТ
         self.exporter.export(rows, output_path)
+
+    # НОВЫЙ МЕТОД
+    def analyze_excel(self, input_path: str, output_path: str = "auto_classified.xlsx"):
+        """
+        Принимает Excel (один или несколько листов) с колонками:
+            «Задуманное слово», «Написанное слово»
+        Добавляет колонку «Авто_Тип_ошибки» и сохраняет новый файл.
+        """
+        print(f"Читаем Excel: {input_path}")
+        dfs = pd.read_excel(input_path, sheet_name=None)  # все листы
+
+        for sheet_name, df in dfs.items():
+            if 'Задуманное слово' not in df.columns or 'Написанное слово' not in df.columns:
+                print(f"Лист «{sheet_name}» пропущен (нет нужных колонок)")
+                continue
+
+            def get_auto_error(row):
+                correct = str(row['Задуманное слово']).strip() if pd.notna(row['Задуманное слово']) else ""
+                written = str(row['Написанное слово']).strip() if pd.notna(row['Написанное слово']) else ""
+
+                if not correct or correct == "nan":
+                    return ""
+
+                # Специальный случай пропуска целого слова (как в вашей разметке)
+                if written in ["-", ""]:
+                    return "Пропуски слогов и слов"
+
+                return ErrorClassifier.classify(correct, written)
+
+            df['Авто_Тип_ошибки'] = df.apply(get_auto_error, axis=1)
+            print(f"Лист «{sheet_name}» обработан: {len(df)} строк")
+
+        # Сохраняем все листы обратно
+        with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
+            for sheet_name, df in dfs.items():
+                df.to_excel(writer, sheet_name=sheet_name, index=False)
+
+        print(f"Готово! Результат сохранён в {output_path}")

@@ -1,4 +1,4 @@
-import pymorphy2
+import pymorphy3
 from wordfreq import top_n_list
 
 
@@ -7,7 +7,7 @@ class Vocabulary:
         """
         size — сколько самых частотных слов брать
         """
-        self.morph = pymorphy2.MorphAnalyzer()
+        self.morph = pymorphy3.MorphAnalyzer()
         self.words = self._build_vocab(size)
 
     def _build_vocab(self, size: int) -> set[str]:

@@ -1,9 +1,9 @@
-import pymorphy2
+import pymorphy3
 
 # не используется в этой версии проекта
 class MorphAnalyzerWrapper:
     def __init__(self):
-        self.morph = pymorphy2.MorphAnalyzer()
+        self.morph = pymorphy3.MorphAnalyzer()
 
     def normalize(self, word: str) -> str:
         parse = self.morph.parse(word)
